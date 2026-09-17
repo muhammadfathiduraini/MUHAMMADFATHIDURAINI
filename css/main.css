@@ -1,763 +1,1654 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+/* =========================================================
+   MUHAMMAD FATHI DURAINI BIN SAHAIMI
+   ACADEMIC ARCHIVE
+   MAIN STYLESHEET
+========================================================= */
+
+
+/* =========================================================
+   01. ROOT
+========================================================= */
+
+:root {
+    --paper: #f3efe7;
+    --paper-light: #faf8f3;
+    --paper-dark: #e7e1d6;
+
+    --navy: #10243b;
+    --navy-soft: #26394d;
+
+    --burgundy: #713b43;
+    --burgundy-dark: #542a31;
+
+    --warm-grey: #8a867d;
+    --line: rgba(16, 36, 59, 0.16);
+
+    --white: #ffffff;
+
+    --serif: Georgia, "Times New Roman", serif;
+    --sans: Arial, Helvetica, sans-serif;
+
+    --max-width: 1440px;
+    --transition: 700ms cubic-bezier(.16, 1, .3, 1);
+}
+
+
+/* =========================================================
+   02. RESET
+========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    background: var(--paper);
+}
+
+body {
+    background: var(--paper);
+    color: var(--navy);
+    font-family: var(--sans);
+    line-height: 1.5;
+    overflow-x: hidden;
+}
+
+body.menu-open {
+    overflow: hidden;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button {
+    border: 0;
+    background: none;
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+}
 
-    <title>Muhammad Fathi Duraini bin Sahaimi</title>
+::selection {
+    background: var(--navy);
+    color: var(--paper);
+}
 
-    <meta
-        name="description"
-        content="Academic website and digital archive of Muhammad Fathi Duraini bin Sahaimi, a Bachelor of International Relations student at Universiti Sultan Zainal Abidin."
-    >
+
+/* =========================================================
+   03. PRELOADER
+========================================================= */
+
+.preloader {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
 
-    <meta name="author" content="Muhammad Fathi Duraini bin Sahaimi">
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-    <link rel="stylesheet" href="css/main.css">
-</head>
+    background: var(--navy);
+    color: var(--paper);
 
-<body>
+    transition:
+        opacity 900ms ease,
+        visibility 900ms ease;
+}
 
-    <!-- =========================================================
-         PRELOADER
-    ========================================================== -->
+.preloader.loaded {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
 
-    <div class="preloader" id="preloader">
-        <div class="preloader-inner">
-            <span class="preloader-number">00</span>
-            <span class="preloader-label">INITIALISING ARCHIVE</span>
-        </div>
-    </div>
+.preloader-inner {
+    display: flex;
+    align-items: baseline;
+    gap: 18px;
+}
 
+.preloader-number {
+    font-family: var(--serif);
+    font-size: clamp(4rem, 9vw, 9rem);
+    line-height: .8;
+}
 
-    <!-- =========================================================
-         CURSOR
-    ========================================================== -->
+.preloader-label {
+    font-size: 10px;
+    letter-spacing: .24em;
+}
 
-    <div class="cursor cursor-dot" id="cursor-dot"></div>
-    <div class="cursor cursor-ring" id="cursor-ring"></div>
 
+/* =========================================================
+   04. CUSTOM CURSOR
+========================================================= */
 
-    <!-- =========================================================
-         HEADER
-    ========================================================== -->
+.cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10000;
 
-    <header class="site-header" id="site-header">
+    pointer-events: none;
 
-        <a href="#top" class="brand">
-            <span class="brand-mark">MFD</span>
+    transform: translate(-50%, -50%);
+}
 
-            <span class="brand-name">
-                MUHAMMAD FATHI DURAINI
-            </span>
-        </a>
+.cursor-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
 
+    background: var(--burgundy);
+}
 
-        <nav class="main-navigation" aria-label="Primary navigation">
+.cursor-ring {
+    width: 30px;
+    height: 30px;
 
-            <a href="#archive">Archive</a>
-            <a href="#research">Research</a>
-            <a href="#knowledge">Knowledge</a>
-            <a href="#profile">Profile</a>
+    border: 1px solid var(--navy);
 
-            <a href="about/" class="nav-special">
-                About
-            </a>
+    border-radius: 50%;
 
-        </nav>
+    transition:
+        width 250ms ease,
+        height 250ms ease,
+        background 250ms ease,
+        border-color 250ms ease;
+}
 
+.cursor-ring.hover {
+    width: 58px;
+    height: 58px;
 
-        <button
-            class="menu-toggle"
-            id="menu-toggle"
-            aria-label="Open navigation"
-            aria-expanded="false"
-        >
-            <span></span>
-            <span></span>
-        </button>
+    background: rgba(113, 59, 67, .08);
 
-    </header>
+    border-color: var(--burgundy);
+}
 
 
-    <!-- =========================================================
-         MOBILE NAVIGATION
-    ========================================================== -->
+/* =========================================================
+   05. HEADER
+========================================================= */
 
-    <div class="mobile-navigation" id="mobile-navigation">
+.site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
 
-        <div class="mobile-navigation-inner">
+    width: 100%;
+    height: 82px;
 
-            <span class="mobile-nav-label">
-                NAVIGATION
-            </span>
+    z-index: 1000;
 
-            <a href="#archive">The Archive</a>
-            <a href="#research">Research</a>
-            <a href="#knowledge">Knowledge</a>
-            <a href="#profile">Profile</a>
-            <a href="about/">About</a>
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 
-        </div>
+    padding: 0 42px;
 
-    </div>
+    border-bottom: 1px solid transparent;
 
+    transition:
+        background 500ms ease,
+        border-color 500ms ease,
+        height 500ms ease;
+}
 
-    <!-- =========================================================
-         MAIN
-    ========================================================== -->
+.site-header.scrolled {
+    height: 70px;
 
-    <main id="top">
+    background: rgba(243, 239, 231, .92);
 
+    border-color: var(--line);
 
-        <!-- =====================================================
-             HERO
-        ====================================================== -->
+    backdrop-filter: blur(18px);
+}
 
-        <section class="hero">
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 13px;
 
-            <div class="hero-background">
-                <div class="hero-grid"></div>
-                <div class="hero-orbit hero-orbit-one"></div>
-                <div class="hero-orbit hero-orbit-two"></div>
-            </div>
+    font-size: 10px;
+    font-weight: 700;
 
+    letter-spacing: .13em;
+}
 
-            <div class="hero-topline">
+.brand-mark {
+    width: 31px;
+    height: 31px;
 
-                <span>
-                    ACADEMIC WEBSITE / 2026
-                </span>
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-                <span>
-                    INTERNATIONAL RELATIONS
-                </span>
+    border: 1px solid var(--navy);
 
-            </div>
+    font-family: var(--serif);
+    font-size: 10px;
+}
 
+.main-navigation {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
 
-            <div class="hero-content">
+.main-navigation a {
+    position: relative;
 
-                <div class="hero-index">
-                    01
-                </div>
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: .14em;
+}
 
+.main-navigation a::after {
+    content: "";
 
-                <div class="hero-heading">
+    position: absolute;
+    left: 0;
+    bottom: -7px;
 
-                    <p class="eyebrow">
-                        MUHAMMAD FATHI DURAINI BIN SAHAIMI
-                    </p>
+    width: 0;
+    height: 1px;
 
-                    <h1>
-                        INTERNATIONAL
-                        <span>RELATIONS</span>
-                    </h1>
+    background: var(--burgundy);
 
-                </div>
+    transition: width 350ms ease;
+}
 
+.main-navigation a:hover::after,
+.main-navigation a.active::after {
+    width: 100%;
+}
 
-                <div class="hero-description">
+.nav-special {
+    padding: 10px 15px;
 
-                    <p>
-                        An evolving academic archive exploring
-                        international law, human rights,
-                        humanitarian affairs and international security.
-                    </p>
+    border: 1px solid var(--navy);
 
-                </div>
+    transition:
+        background 300ms ease,
+        color 300ms ease;
+}
 
-            </div>
+.nav-special:hover {
+    background: var(--navy);
+    color: var(--paper);
+}
 
+.menu-toggle {
+    display: none;
 
-            <div class="hero-bottom">
+    width: 38px;
+    height: 38px;
 
-                <div class="hero-location">
-                    UNIVERSITI SULTAN ZAINAL ABIDIN
-                </div>
+    position: relative;
+}
 
-                <a href="#archive" class="hero-scroll">
-                    <span>EXPLORE THE ARCHIVE</span>
-                    <span class="arrow">↓</span>
-                </a>
+.menu-toggle span {
+    position: absolute;
+    left: 8px;
 
-            </div>
+    width: 22px;
+    height: 1px;
 
-        </section>
+    background: var(--navy);
 
+    transition: transform 400ms ease;
+}
 
-        <!-- =====================================================
-             INTRODUCTION
-        ====================================================== -->
+.menu-toggle span:first-child {
+    top: 15px;
+}
 
-        <section class="introduction section">
+.menu-toggle span:last-child {
+    top: 22px;
+}
 
-            <div class="section-number">
-                02
-            </div>
+.menu-toggle.active span:first-child {
+    transform: translateY(3.5px) rotate(45deg);
+}
 
+.menu-toggle.active span:last-child {
+    transform: translateY(-3.5px) rotate(-45deg);
+}
 
-            <div class="introduction-layout">
 
-                <div class="section-label">
-                    INTRODUCTION
-                </div>
+/* =========================================================
+   06. MOBILE NAV
+========================================================= */
 
+.mobile-navigation {
+    position: fixed;
+    inset: 0;
+    z-index: 900;
 
-                <div class="introduction-copy">
+    background: var(--paper);
 
-                    <h2>
-                        A record of learning,
-                        research and intellectual work.
-                    </h2>
+    opacity: 0;
+    visibility: hidden;
 
+    transition:
+        opacity 500ms ease,
+        visibility 500ms ease;
+}
 
-                    <p>
-                        This website documents the academic journey
-                        of Muhammad Fathi Duraini bin Sahaimi,
-                        a Bachelor of International Relations
-                        student at Universiti Sultan Zainal Abidin.
-                    </p>
+.mobile-navigation.open {
+    opacity: 1;
+    visibility: visible;
+}
 
+.mobile-navigation-inner {
+    height: 100%;
 
-                    <p>
-                        Rather than functioning solely as a conventional
-                        portfolio, this site is designed as an evolving
-                        digital archive of research, academic projects,
-                        knowledge notes, case analyses and other
-                        intellectual work.
-                    </p>
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 
+    padding: 80px 30px 40px;
+}
 
-                    <a href="about/" class="text-link">
-                        <span>READ MORE ABOUT THIS WORK</span>
-                        <span>↗</span>
-                    </a>
+.mobile-nav-label {
+    margin-bottom: 25px;
 
-                </div>
+    color: var(--warm-grey);
 
-            </div>
+    font-size: 9px;
+    letter-spacing: .2em;
+}
 
-        </section>
+.mobile-navigation a {
+    padding: 15px 0;
 
+    border-bottom: 1px solid var(--line);
 
-        <!-- =====================================================
-             ARCHIVE
-        ====================================================== -->
+    font-family: var(--serif);
+    font-size: clamp(2rem, 8vw, 4rem);
+}
 
-        <section class="archive section" id="archive">
 
-            <div class="section-header">
+/* =========================================================
+   07. GLOBAL SECTION
+========================================================= */
 
-                <div class="section-number">
-                    03
-                </div>
+.section {
+    position: relative;
 
-                <div class="section-label">
-                    THE ARCHIVE
-                </div>
+    max-width: var(--max-width);
 
-            </div>
+    margin: 0 auto;
 
+    padding: 150px 7vw;
+}
 
-            <div class="archive-intro">
+.section-header {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    align-items: start;
 
-                <h2>
-                    THE
-                    <span>ARCHIVE</span>
-                </h2>
+    margin-bottom: 90px;
 
-                <p>
-                    Academic work is preserved here as individual
-                    records rather than disappearing into a list of
-                    achievements.
-                </p>
+    border-top: 1px solid var(--line);
 
-            </div>
+    padding-top: 15px;
+}
 
+.section-number {
+    font-family: var(--serif);
+    font-size: 13px;
+}
 
-            <div class="archive-list">
+.section-label {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: .22em;
+}
 
 
-                <!-- ARCHIVE ITEM -->
+/* =========================================================
+   08. HERO
+========================================================= */
 
-                <a href="research/" class="archive-item">
+.hero {
+    position: relative;
 
-                    <div class="archive-meta">
-                        <span>001</span>
-                        <span>RESEARCH</span>
-                    </div>
+    min-height: 100svh;
 
-                    <div class="archive-title">
-                        Research
-                    </div>
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 
-                    <div class="archive-description">
-                        Articles, research briefs, policy analysis
-                        and academic writing.
-                    </div>
+    padding: 125px 6vw 45px;
 
-                    <div class="archive-arrow">
-                        ↗
-                    </div>
+    overflow: hidden;
 
-                </a>
+    background: var(--paper);
+}
 
+.hero-background {
+    position: absolute;
+    inset: 0;
 
-                <!-- ARCHIVE ITEM -->
+    pointer-events: none;
+}
 
-                <a href="thesis/" class="archive-item">
+.hero-grid {
+    position: absolute;
+    inset: 0;
 
-                    <div class="archive-meta">
-                        <span>002</span>
-                        <span>THESIS</span>
-                    </div>
+    background-image:
+        linear-gradient(
+            to right,
+            rgba(16, 36, 59, .045) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            to bottom,
+            rgba(16, 36, 59, .045) 1px,
+            transparent 1px
+        );
 
-                    <div class="archive-title">
-                        Thesis
-                    </div>
+    background-size: 80px 80px;
 
-                    <div class="archive-description">
-                        Major academic research and long-form
-                        undergraduate work.
-                    </div>
+    mask-image: linear-gradient(
+        to bottom,
+        black,
+        transparent 90%
+    );
+}
 
-                    <div class="archive-arrow">
-                        ↗
-                    </div>
+.hero-orbit {
+    position: absolute;
 
-                </a>
+    border: 1px solid rgba(113, 59, 67, .12);
 
+    border-radius: 50%;
 
-                <!-- ARCHIVE ITEM -->
+    transform: rotate(-18deg);
+}
 
-                <a href="cases/" class="archive-item">
+.hero-orbit-one {
+    width: 62vw;
+    height: 28vw;
 
-                    <div class="archive-meta">
-                        <span>003</span>
-                        <span>CASE FILES</span>
-                    </div>
+    right: -15vw;
+    top: 18%;
 
-                    <div class="archive-title">
-                        Case Files
-                    </div>
+    animation: orbitFloat 15s ease-in-out infinite alternate;
+}
 
-                    <div class="archive-description">
-                        Structured examinations of international
-                        legal, political and humanitarian cases.
-                    </div>
+.hero-orbit-two {
+    width: 45vw;
+    height: 20vw;
 
-                    <div class="archive-arrow">
-                        ↗
-                    </div>
+    right: -5vw;
+    top: 27%;
 
-                </a>
+    animation: orbitFloat 19s ease-in-out infinite alternate-reverse;
+}
 
+@keyframes orbitFloat {
+    from {
+        transform: rotate(-18deg) translateY(0);
+    }
 
-                <!-- ARCHIVE ITEM -->
+    to {
+        transform: rotate(-14deg) translateY(25px);
+    }
+}
 
-                <a href="academic-work/" class="archive-item">
+.hero-topline,
+.hero-bottom {
+    position: relative;
+    z-index: 2;
 
-                    <div class="archive-meta">
-                        <span>004</span>
-                        <span>ACADEMIC WORK</span>
-                    </div>
+    display: flex;
+    justify-content: space-between;
 
-                    <div class="archive-title">
-                        Academic Work
-                    </div>
+    font-size: 9px;
+    letter-spacing: .18em;
+}
 
-                    <div class="archive-description">
-                        Presentations, conferences, projects and
-                        selected academic activities.
-                    </div>
+.hero-content {
+    position: relative;
+    z-index: 2;
 
-                    <div class="archive-arrow">
-                        ↗
-                    </div>
+    display: grid;
+    grid-template-columns: 80px 1fr 300px;
 
-                </a>
+    align-items: end;
 
+    margin-top: auto;
+    margin-bottom: auto;
 
-            </div>
+    padding: 80px 0;
+}
 
-        </section>
+.hero-index {
+    align-self: start;
 
+    font-family: var(--serif);
+    font-size: 13px;
+}
 
-        <!-- =====================================================
-             RESEARCH
-        ====================================================== -->
+.eyebrow {
+    margin-bottom: 22px;
 
-        <section class="research section" id="research">
+    font-size: 9px;
+    font-weight: 700;
 
-            <div class="section-header">
+    letter-spacing: .2em;
+}
 
-                <div class="section-number">
-                    04
-                </div>
+.hero-heading h1 {
+    max-width: 950px;
 
-                <div class="section-label">
-                    RESEARCH
-                </div>
+    font-family: var(--serif);
+    font-size: clamp(4rem, 10vw, 10.5rem);
+    font-weight: 400;
 
-            </div>
+    line-height: .79;
+    letter-spacing: -.055em;
+}
 
+.hero-heading h1 span {
+    display: block;
 
-            <div class="research-layout">
+    margin-left: 11vw;
 
-                <div class="research-heading">
+    color: var(--burgundy);
 
-                    <p class="eyebrow">
-                        SELECTED WORK
-                    </p>
+    font-style: italic;
+}
 
-                    <h2>
-                        Research
-                        <span>in progress.</span>
-                    </h2>
+.hero-description {
+    align-self: end;
 
-                </div>
+    padding-bottom: 5px;
+}
 
+.hero-description p {
+    max-width: 260px;
 
-                <div class="research-copy">
+    font-size: 12px;
+    line-height: 1.8;
 
-                    <p>
-                        Research presented here will be developed
-                        as complete individual works, with dedicated
-                        pages for reading, references and supporting
-                        materials.
-                    </p>
+    color: var(--navy-soft);
+}
 
-                    <a href="research/" class="text-link">
-                        <span>ENTER RESEARCH ARCHIVE</span>
-                        <span>↗</span>
-                    </a>
+.hero-scroll {
+    display: flex;
+    align-items: center;
+    gap: 15px;
 
-                </div>
+    font-size: 9px;
+    letter-spacing: .15em;
+}
 
-            </div>
+.hero-scroll .arrow {
+    font-size: 18px;
 
+    transition: transform 400ms ease;
+}
 
-            <div class="research-placeholder">
+.hero-scroll:hover .arrow {
+    transform: translateY(6px);
+}
 
-                <div class="placeholder-number">
-                    001
-                </div>
 
-                <div class="placeholder-content">
+/* =========================================================
+   09. INTRODUCTION
+========================================================= */
 
-                    <span class="status">
-                        ARCHIVE DEVELOPING
-                    </span>
+.introduction {
+    min-height: 90vh;
 
-                    <h3>
-                        Research works will appear here.
-                    </h3>
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
 
-                    <p>
-                        Each completed work will receive its own
-                        dedicated archive page.
-                    </p>
+.introduction-layout {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 60px;
+}
 
-                </div>
+.introduction-copy {
+    max-width: 920px;
+}
 
-            </div>
+.introduction-copy h2 {
+    max-width: 800px;
 
-        </section>
+    margin-bottom: 55px;
 
+    font-family: var(--serif);
+    font-size: clamp(2.8rem, 5.2vw, 6rem);
+    font-weight: 400;
 
-        <!-- =====================================================
-             KNOWLEDGE
-        ====================================================== -->
+    line-height: .95;
+    letter-spacing: -.04em;
+}
 
-        <section class="knowledge section" id="knowledge">
+.introduction-copy p {
+    max-width: 650px;
 
-            <div class="section-header">
+    margin-bottom: 22px;
 
-                <div class="section-number">
-                    05
-                </div>
+    font-size: 15px;
+    line-height: 1.9;
 
-                <div class="section-label">
-                    KNOWLEDGE
-                </div>
+    color: var(--navy-soft);
+}
 
-            </div>
+.text-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 20px;
 
+    margin-top: 30px;
+    padding-bottom: 8px;
 
-            <div class="knowledge-heading">
+    border-bottom: 1px solid var(--navy);
 
-                <h2>
-                    BUILDING A
-                    <span>KNOWLEDGE SYSTEM.</span>
-                </h2>
+    font-size: 9px;
+    font-weight: 700;
 
-                <p>
-                    A structured space for concepts, legal principles,
-                    cases and ideas developed through continuous study.
-                </p>
+    letter-spacing: .15em;
 
-            </div>
+    transition:
+        color 300ms ease,
+        gap 300ms ease;
+}
 
+.text-link:hover {
+    color: var(--burgundy);
+    gap: 28px;
+}
 
-            <div class="knowledge-map">
 
-                <div class="knowledge-line line-one"></div>
-                <div class="knowledge-line line-two"></div>
-                <div class="knowledge-line line-three"></div>
+/* =========================================================
+   10. ARCHIVE
+========================================================= */
 
+.archive {
+    background: var(--paper-light);
+}
 
-                <a
-                    href="knowledge/international-law/"
-                    class="knowledge-node node-main"
-                >
-                    <span>01</span>
-                    INTERNATIONAL
-                    <strong>LAW</strong>
-                </a>
+.archive-intro {
+    display: grid;
+    grid-template-columns: 1.4fr .6fr;
+    gap: 100px;
 
+    align-items: end;
 
-                <a
-                    href="knowledge/human-rights/"
-                    class="knowledge-node node-two"
-                >
-                    <span>02</span>
-                    HUMAN
-                    <strong>RIGHTS</strong>
-                </a>
+    margin-bottom: 80px;
+}
 
+.archive-intro h2 {
+    font-family: var(--serif);
+    font-size: clamp(5rem, 12vw, 12rem);
+    font-weight: 400;
 
-                <a
-                    href="knowledge/humanitarian-law/"
-                    class="knowledge-node node-three"
-                >
-                    <span>03</span>
-                    HUMANITARIAN
-                    <strong>LAW</strong>
-                </a>
+    line-height: .72;
+    letter-spacing: -.06em;
+}
 
+.archive-intro h2 span {
+    display: block;
 
-                <a
-                    href="knowledge/international-security/"
-                    class="knowledge-node node-four"
-                >
-                    <span>04</span>
-                    INTERNATIONAL
-                    <strong>SECURITY</strong>
-                </a>
+    margin-left: 9vw;
 
-            </div>
+    color: var(--burgundy);
 
+    font-style: italic;
+}
 
-            <div class="knowledge-footer">
+.archive-intro p {
+    max-width: 300px;
 
-                <span>
-                    KNOWLEDGE / CONTINUOUSLY DEVELOPING
-                </span>
+    padding-bottom: 5px;
 
-                <a href="knowledge/">
-                    VIEW KNOWLEDGE SYSTEM ↗
-                </a>
+    font-size: 12px;
+    line-height: 1.8;
+}
 
-            </div>
+.archive-list {
+    border-top: 1px solid var(--navy);
+}
 
-        </section>
+.archive-item {
+    position: relative;
 
+    display: grid;
+    grid-template-columns: 130px 1.1fr .7fr 50px;
+    align-items: center;
 
-        <!-- =====================================================
-             PROFILE
-        ====================================================== -->
+    min-height: 145px;
 
-        <section class="profile section" id="profile">
+    border-bottom: 1px solid var(--line);
 
-            <div class="section-header">
+    overflow: hidden;
 
-                <div class="section-number">
-                    06
-                </div>
+    transition:
+        padding 500ms var(--transition),
+        color 500ms ease;
+}
 
-                <div class="section-label">
-                    PROFILE
-                </div>
+.archive-item::before {
+    content: "";
 
-            </div>
+    position: absolute;
+    inset: 0;
 
+    background: var(--navy);
 
-            <div class="profile-layout">
+    transform: translateY(101%);
 
-                <div class="profile-name">
+    transition: transform 600ms var(--transition);
 
-                    <span class="eyebrow">
-                        ACADEMIC PROFILE
-                    </span>
+    z-index: 0;
+}
 
-                    <h2>
-                        MUHAMMAD
-                        <span>FATHI</span>
-                        DURAINI
-                        <small>BIN SAHAIMI</small>
-                    </h2>
+.archive-item > * {
+    position: relative;
+    z-index: 1;
+}
 
-                </div>
+.archive-item:hover {
+    padding-left: 25px;
 
+    color: var(--paper);
+}
 
-                <div class="profile-details">
+.archive-item:hover::before {
+    transform: translateY(0);
+}
 
-                    <div class="profile-row">
+.archive-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
 
-                        <span>
-                            EDUCATION
-                        </span>
+    font-size: 8px;
+    letter-spacing: .15em;
+}
 
-                        <strong>
-                            Bachelor of International
-                            Relations (Hons.)
-                        </strong>
+.archive-meta span:first-child {
+    font-family: var(--serif);
+    font-size: 15px;
+}
 
-                    </div>
+.archive-title {
+    font-family: var(--serif);
+    font-size: clamp(2rem, 4vw, 4rem);
+}
 
+.archive-description {
+    max-width: 250px;
 
-                    <div class="profile-row">
+    font-size: 11px;
+    line-height: 1.6;
+}
 
-                        <span>
-                            INSTITUTION
-                        </span>
+.archive-arrow {
+    font-size: 22px;
 
-                        <strong>
-                            Universiti Sultan Zainal Abidin
-                        </strong>
+    transition: transform 500ms var(--transition);
+}
 
-                    </div>
+.archive-item:hover .archive-arrow {
+    transform: translate(8px, -8px);
+}
 
 
-                    <div class="profile-row">
+/* =========================================================
+   11. RESEARCH
+========================================================= */
 
-                        <span>
-                            CURRENT
-                        </span>
+.research-layout {
+    display: grid;
+    grid-template-columns: 1fr .6fr;
+    gap: 100px;
 
-                        <strong>
-                            Year 2 · Semester 3
-                        </strong>
+    align-items: end;
 
-                    </div>
+    margin-bottom: 100px;
+}
 
+.research-heading h2 {
+    max-width: 750px;
 
-                    <div class="profile-row">
+    font-family: var(--serif);
+    font-size: clamp(4rem, 8vw, 8rem);
+    font-weight: 400;
 
-                        <span>
-                            INTERESTS
-                        </span>
+    line-height: .82;
+    letter-spacing: -.05em;
+}
 
-                        <strong>
-                            International Law · Human Rights ·
-                            Humanitarian Affairs · International Security
-                        </strong>
+.research-heading h2 span {
+    display: block;
 
-                    </div>
+    margin-left: 7vw;
 
+    color: var(--burgundy);
 
-                    <a href="cv/" class="profile-link">
-                        VIEW FULL PROFILE / CV ↗
-                    </a>
+    font-style: italic;
+}
 
-                </div>
+.research-copy p {
+    max-width: 340px;
 
-            </div>
+    font-size: 13px;
+    line-height: 1.8;
+}
 
-        </section>
+.research-placeholder {
+    display: grid;
+    grid-template-columns: 120px 1fr;
 
+    min-height: 280px;
 
-        <!-- =====================================================
-             CLOSING STATEMENT
-        ====================================================== -->
+    border-top: 1px solid var(--navy);
+    border-bottom: 1px solid var(--line);
 
-        <section class="closing section">
+    padding: 35px 0;
+}
 
-            <div class="closing-mark">
-                MFD
-            </div>
+.placeholder-number {
+    font-family: var(--serif);
+    font-size: 15px;
+}
 
+.placeholder-content {
+    align-self: center;
+}
 
-            <div class="closing-content">
+.status {
+    display: inline-block;
 
-                <p class="eyebrow">
-                    THE WORK CONTINUES
-                </p>
+    margin-bottom: 20px;
+    padding: 6px 9px;
 
-                <h2>
-                    From learning
-                    <span>to contribution.</span>
-                </h2>
+    border: 1px solid var(--line);
 
-                <p>
-                    An academic archive is never finished.
-                    It grows with every question investigated,
-                    every argument tested and every work completed.
-                </p>
+    font-size: 8px;
+    letter-spacing: .15em;
+}
 
-            </div>
+.placeholder-content h3 {
+    margin-bottom: 15px;
 
-        </section>
+    font-family: var(--serif);
+    font-size: clamp(2rem, 4vw, 4rem);
+    font-weight: 400;
+}
 
+.placeholder-content p {
+    max-width: 450px;
 
-    </main>
+    font-size: 12px;
+}
 
 
-    <!-- =========================================================
-         FOOTER
-    ========================================================== -->
+/* =========================================================
+   12. KNOWLEDGE
+========================================================= */
 
-    <footer class="site-footer">
+.knowledge {
+    background: var(--navy);
+    color: var(--paper);
 
-        <div class="footer-top">
+    max-width: none;
 
-            <div class="footer-identity">
+    padding-left: 7vw;
+    padding-right: 7vw;
+}
 
-                <span class="footer-monogram">
-                    MFD
-                </span>
+.knowledge .section-header {
+    border-color: rgba(243, 239, 231, .18);
+}
 
-                <p>
-                    MUHAMMAD FATHI DURAINI BIN SAHAIMI
-                </p>
+.knowledge-heading {
+    display: grid;
+    grid-template-columns: 1.2fr .5fr;
 
-            </div>
+    gap: 80px;
 
+    align-items: end;
 
-            <div class="footer-navigation">
+    margin-bottom: 120px;
+}
 
-                <a href="#top">Home</a>
-                <a href="research/">Research</a>
-                <a href="knowledge/">Knowledge</a>
-                <a href="cv/">CV</a>
-                <a href="about/">About</a>
+.knowledge-heading h2 {
+    font-family: var(--serif);
+    font-size: clamp(4rem, 8vw, 9rem);
+    font-weight: 400;
 
-            </div>
+    line-height: .78;
+    letter-spacing: -.05em;
+}
 
-        </div>
+.knowledge-heading h2 span {
+    display: block;
 
+    margin-left: 8vw;
 
-        <div class="footer-bottom">
+    color: #c5a0a3;
 
-            <span>
-                © 2026 MUHAMMAD FATHI DURAINI BIN SAHAIMI
-            </span>
+    font-style: italic;
+}
 
-            <span>
-                ACADEMIC ARCHIVE
-            </span>
+.knowledge-heading p {
+    max-width: 330px;
 
-        </div>
+    font-size: 12px;
+    line-height: 1.8;
 
-    </footer>
+    color: rgba(243, 239, 231, .7);
+}
 
+.knowledge-map {
+    position: relative;
 
-    <!-- =========================================================
-         JAVASCRIPT
-    ========================================================== -->
+    min-height: 620px;
 
-    <script src="js/main.js"></script>
+    border: 1px solid rgba(243, 239, 231, .16);
 
-</body>
-</html>
+    overflow: hidden;
+}
+
+.knowledge-line {
+    position: absolute;
+
+    height: 1px;
+
+    background: rgba(243, 239, 231, .16);
+
+    transform-origin: left center;
+}
+
+.line-one {
+    width: 55%;
+
+    top: 35%;
+    left: 20%;
+
+    transform: rotate(14deg);
+}
+
+.line-two {
+    width: 43%;
+
+    top: 57%;
+    left: 38%;
+
+    transform: rotate(-25deg);
+}
+
+.line-three {
+    width: 30%;
+
+    top: 42%;
+    left: 46%;
+
+    transform: rotate(75deg);
+}
+
+.knowledge-node {
+    position: absolute;
+
+    width: 190px;
+    height: 190px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    padding: 25px;
+
+    border: 1px solid rgba(243, 239, 231, .3);
+
+    border-radius: 50%;
+
+    font-family: var(--serif);
+    font-size: 21px;
+    line-height: .95;
+
+    transition:
+        transform 600ms var(--transition),
+        background 500ms ease,
+        color 500ms ease;
+}
+
+.knowledge-node span {
+    margin-bottom: 15px;
+
+    font-family: var(--sans);
+    font-size: 8px;
+
+    letter-spacing: .15em;
+
+    color: rgba(243, 239, 231, .55);
+}
+
+.knowledge-node strong {
+    font-weight: 400;
+}
+
+.knowledge-node:hover {
+    background: var(--paper);
+    color: var(--navy);
+
+    transform: scale(1.08);
+}
+
+.node-main {
+    top: 17%;
+    left: 37%;
+
+    width: 250px;
+    height: 250px;
+
+    font-size: 29px;
+}
+
+.node-two {
+    top: 8%;
+    left: 7%;
+}
+
+.node-three {
+    right: 7%;
+    bottom: 7%;
+}
+
+.node-four {
+    left: 13%;
+    bottom: 8%;
+}
+
+.knowledge-footer {
+    display: flex;
+    justify-content: space-between;
+
+    margin-top: 25px;
+
+    font-size: 8px;
+    letter-spacing: .15em;
+
+    color: rgba(243, 239, 231, .6);
+}
+
+.knowledge-footer a {
+    color: var(--paper);
+}
+
+
+/* =========================================================
+   13. PROFILE
+========================================================= */
+
+.profile-layout {
+    display: grid;
+    grid-template-columns: 1fr .75fr;
+
+    gap: 100px;
+}
+
+.profile-name h2 {
+    font-family: var(--serif);
+    font-size: clamp(4rem, 8vw, 8rem);
+    font-weight: 400;
+
+    line-height: .78;
+    letter-spacing: -.05em;
+}
+
+.profile-name h2 span {
+    display: block;
+
+    margin-left: 6vw;
+
+    color: var(--burgundy);
+
+    font-style: italic;
+}
+
+.profile-name h2 small {
+    display: block;
+
+    margin-top: 18px;
+
+    font-family: var(--sans);
+    font-size: 10px;
+    font-weight: 400;
+
+    letter-spacing: .22em;
+}
+
+.profile-details {
+    border-top: 1px solid var(--navy);
+}
+
+.profile-row {
+    display: grid;
+    grid-template-columns: 130px 1fr;
+    gap: 25px;
+
+    padding: 23px 0;
+
+    border-bottom: 1px solid var(--line);
+}
+
+.profile-row span {
+    font-size: 8px;
+    font-weight: 700;
+
+    letter-spacing: .15em;
+
+    color: var(--warm-grey);
+}
+
+.profile-row strong {
+    font-size: 12px;
+    font-weight: 400;
+
+    line-height: 1.6;
+}
+
+.profile-link {
+    display: inline-flex;
+
+    margin-top: 35px;
+    padding: 13px 18px;
+
+    border: 1px solid var(--navy);
+
+    font-size: 9px;
+    font-weight: 700;
+
+    letter-spacing: .15em;
+
+    transition:
+        background 300ms ease,
+        color 300ms ease;
+}
+
+.profile-link:hover {
+    background: var(--navy);
+    color: var(--paper);
+}
+
+
+/* =========================================================
+   14. CLOSING
+========================================================= */
+
+.closing {
+    min-height: 90vh;
+
+    display: grid;
+    grid-template-columns: .35fr 1fr;
+
+    align-items: center;
+
+    background: var(--paper-dark);
+
+    max-width: none;
+
+    padding-left: 10vw;
+    padding-right: 10vw;
+}
+
+.closing-mark {
+    width: 150px;
+    height: 150px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid var(--navy);
+
+    border-radius: 50%;
+
+    font-family: var(--serif);
+    font-size: 25px;
+}
+
+.closing-content h2 {
+    max-width: 900px;
+
+    margin-bottom: 40px;
+
+    font-family: var(--serif);
+    font-size: clamp(4rem, 9vw, 9rem);
+    font-weight: 400;
+
+    line-height: .78;
+    letter-spacing: -.05em;
+}
+
+.closing-content h2 span {
+    display: block;
+
+    margin-left: 8vw;
+
+    color: var(--burgundy);
+
+    font-style: italic;
+}
+
+.closing-content > p:last-child {
+    max-width: 470px;
+
+    font-size: 13px;
+    line-height: 1.8;
+}
+
+
+/* =========================================================
+   15. FOOTER
+========================================================= */
+
+.site-footer {
+    padding: 60px 7vw 30px;
+
+    background: var(--navy);
+    color: var(--paper);
+}
+
+.footer-top {
+    display: flex;
+    justify-content: space-between;
+
+    padding-bottom: 70px;
+
+    border-bottom: 1px solid rgba(243, 239, 231, .16);
+}
+
+.footer-identity {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.footer-monogram {
+    width: 42px;
+    height: 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid rgba(243, 239, 231, .4);
+
+    font-family: var(--serif);
+    font-size: 12px;
+}
+
+.footer-identity p {
+    font-size: 9px;
+    letter-spacing: .13em;
+}
+
+.footer-navigation {
+    display: flex;
+    gap: 25px;
+}
+
+.footer-navigation a {
+    font-size: 9px;
+    letter-spacing: .13em;
+
+    color: rgba(243, 239, 231, .7);
+
+    transition: color 250ms ease;
+}
+
+.footer-navigation a:hover {
+    color: var(--paper);
+}
+
+.footer-bottom {
+    display: flex;
+    justify-content: space-between;
+
+    padding-top: 25px;
+
+    font-size: 8px;
+    letter-spacing: .14em;
+
+    color: rgba(243, 239, 231, .45);
+}
+
+
+/* =========================================================
+   16. REVEAL ANIMATIONS
+========================================================= */
+
+.reveal {
+    opacity: 0;
+
+    transform: translateY(45px);
+
+    transition:
+        opacity 900ms var(--transition),
+        transform 900ms var(--transition);
+}
+
+.reveal.visible {
+    opacity: 1;
+
+    transform: translateY(0);
+}
+
+
+/* =========================================================
+   17. RESPONSIVE TABLET
+========================================================= */
+
+@media (max-width: 1000px) {
+
+    .site-header {
+        padding: 0 25px;
+    }
+
+    .main-navigation {
+        gap: 17px;
+    }
+
+    .hero-content {
+        grid-template-columns: 50px 1fr;
+    }
+
+    .hero-description {
+        grid-column: 2;
+
+        margin-top: 45px;
+    }
+
+    .archive-item {
+        grid-template-columns: 90px 1fr .5fr 35px;
+    }
+
+    .archive-description {
+        display: none;
+    }
+
+    .research-layout,
+    .profile-layout {
+        grid-template-columns: 1fr;
+        gap: 60px;
+    }
+
+    .knowledge-heading {
+        grid-template-columns: 1fr;
+    }
+
+    .closing {
+        grid-template-columns: 1fr;
+        gap: 70px;
+    }
+
+}
+
+
+/* =========================================================
+   18. RESPONSIVE MOBILE
+========================================================= */
+
+@media (max-width: 700px) {
+
+    .cursor {
+        display: none;
+    }
+
+    .site-header {
+        height: 68px;
+        padding: 0 18px;
+    }
+
+    .site-header.scrolled {
+        height: 62px;
+    }
+
+    .brand-name {
+        max-width: 170px;
+
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .main-navigation {
+        display: none;
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+
+    .hero {
+        min-height: 100svh;
+
+        padding: 100px 20px 30px;
+    }
+
+    .hero-topline {
+        gap: 30px;
+
+        font-size: 7px;
+    }
+
+    .hero-topline span:last-child {
+        text-align: right;
+    }
+
+    .hero-content {
+        display: block;
+
+        padding: 50px 0;
+    }
+
+    .hero-index {
+        margin-bottom: 35px;
+    }
+
+    .hero-heading h1 {
+        font-size: clamp(3.6rem, 18vw, 7rem);
+    }
+
+    .hero-heading h1 span {
+        margin-left: 13vw;
+    }
+
+    .hero-description {
+        margin-top: 50px;
+    }
+
+    .hero-bottom {
+        font-size: 7px;
+    }
+
+    .hero-location {
+        max-width: 130px;
+    }
+
+    .section {
+        padding: 100px 20px;
+    }
+
+    .section-header {
+        grid-template-columns: 45px 1fr;
+
+        margin-bottom: 60px;
+    }
+
+    .introduction-layout {
+        grid-template-columns: 1fr;
+        gap: 35px;
+    }
+
+    .introduction-copy h2 {
+        font-size: clamp(2.7rem, 13vw, 5rem);
+    }
+
+    .archive-intro {
+        grid-template-columns: 1fr;
+        gap: 50px;
+    }
+
+    .archive-intro h2 {
+        font-size: clamp(5rem, 25vw, 10rem);
+    }
+
+    .archive-item {
+        grid-template-columns: 45px 1fr 30px;
+
+        min-height: 120px;
+    }
+
+    .archive-meta span:last-child {
+        display: none;
+    }
+
+    .archive-title {
+        font-size: 2.2rem;
+    }
+
+    .research-layout {
+        gap: 50px;
+    }
+
+    .research-heading h2 {
+        font-size: clamp(4rem, 18vw, 7rem);
+    }
+
+    .research-placeholder {
+        grid-template-columns: 45px 1fr;
+    }
+
+    .knowledge {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .knowledge-heading h2 {
+        font-size: clamp(4rem, 17vw, 7rem);
+    }
+
+    .knowledge-map {
+        min-height: 620px;
+    }
+
+    .knowledge-node {
+        width: 135px;
+        height: 135px;
+
+        padding: 18px;
+
+        font-size: 16px;
+    }
+
+    .node-main {
+        width: 185px;
+        height: 185px;
+
+        left: 24%;
+
+        font-size: 21px;
+    }
+
+    .node-two {
+        left: 3%;
+        top: 9%;
+    }
+
+    .node-three {
+        right: 3%;
+        bottom: 8%;
+    }
+
+    .node-four {
+        left: 4%;
+        bottom: 8%;
+    }
+
+    .knowledge-footer {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .profile-name h2 {
+        font-size: clamp(4rem, 18vw, 7rem);
+    }
+
+    .profile-row {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .closing {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .closing-mark {
+        width: 110px;
+        height: 110px;
+    }
+
+    .closing-content h2 {
+        font-size: clamp(4rem, 18vw, 7rem);
+    }
+
+    .footer-top {
+        flex-direction: column;
+        gap: 50px;
+    }
+
+    .footer-navigation {
+        flex-wrap: wrap;
+    }
+
+    .footer-bottom {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+}
+
+
+/* =========================================================
+   19. REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+    }
+
+}
